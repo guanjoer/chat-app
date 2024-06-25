@@ -1,0 +1,6 @@
+node_modules/
+
+database.js
+
+# 환경 변수 파일
+.env
