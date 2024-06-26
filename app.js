@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const socketIO = require('socket.io');
 const http = require('http');
+const moment = require('moment');
 
 const chatRoutes = require('./routes/chat.routes');
 
@@ -26,10 +27,16 @@ const io = socketIO(server);
 io.on('connection', (socket) => {
     // console.log('a user connected');
 
-	socket.on('chatting', (data) => {
-		console.log(data);
+	socket.on('chatting', (data) => { // From Client Data
+		// console.log(data);
 
-		io.emit('chatting', `hello Client`);
+		const {nickname, msg} = data
+
+		io.emit('chatting', {
+			nickname: nickname,
+			msg: msg,
+			time: moment(new Date()).format("h:ss A")
+		}); // Send Data To Client
 	})
 });
 
