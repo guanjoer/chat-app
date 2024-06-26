@@ -3,29 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <title>Chat App</title>
-
-	<link rel="stylesheet" href="styles/chat.css">
+    <link rel="stylesheet" href="styles/chat.css">
     <script src="/socket.io/socket.io.js" defer></script>
-	<script src="scripts/chat.js" defer></script>
+    <script src="scripts/chat.js" defer></script>
 </head>
 <body>
-	<div class="wrapper">
-		<div class="user-container">
-			<label for="nickname">대화명</label>
-			<input type="text" id="nickname">
-		</div>
-		<div class="display-container">
-			<ul class="chat-list">
-
-			</ul>
-		</div>
-		<div class="input-container">
-			<span>
-				<input type="text" class="chat-input">
-				<button class="send-btn">Send</button>
-			</span>
-		</div>
-	</div>
-
+    <div class="wrapper">
+        <div class="sender-container">
+            <label for="sender">Your Nickname: </label>
+            <p id="sender"></p>
+        </div>
+        <div class="display-container">
+            <ul class="chat-list">
+            </ul>
+        </div>
+		<div class="user-list-container">
+            <h4>현재 접속자</h4>
+            <ul class="user-list">
+            </ul>
+        </div>
+        <div class="input-container">
+            <span>
+                <input type="text" class="chat-input">
+                <button class="send-btn">Send</button>
+            </span>
+        </div>
+    </div>
 </body>
 </html>

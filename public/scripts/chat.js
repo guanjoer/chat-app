@@ -1,12 +1,17 @@
 "use strict";
 
-const socket = io();
+const socket = io({
+    query: {
+        nickname: sessionStorage.getItem('nickname') || ''
+    }
+});
 
-const nickNameElem = document.getElementById('nickname');
+const senderElem = document.getElementById('sender');
 const chatListElem = document.querySelector('.chat-list');
 const chatInputElem = document.querySelector('.chat-input');
 const sendButton = document.querySelector('.send-btn');
 const displayContainer = document.querySelector('.display-container');
+const userListElem = document.querySelector('.user-list');
 
 
 function LiModel(name, msg, time) {
@@ -17,7 +22,7 @@ function LiModel(name, msg, time) {
 	this.makeLi = ()=>{
 		const li = document.createElement('li');
 
-		if(this.name === nickNameElem.value) {
+		if(this.name === senderElem.innerText) {
 			li.classList.add('sent');
 		} else {
 			li.classList.add('received');
@@ -40,7 +45,7 @@ function LiModel(name, msg, time) {
 
 function sendMessageToServer() {
 	const data = {
-		nickname: nickNameElem.value,
+		sender: senderElem.innerText,
 		msg: chatInputElem.value,
 	};
 
@@ -58,10 +63,27 @@ chatInputElem.addEventListener('keypress', (event)=>{
 
 
 socket.on('chatting', (data) => {
-	const {nickname, msg, time} = data
-	const item = new LiModel(nickname, msg, time);
+	const {sender, msg, time} = data
+	const item = new LiModel(sender, msg, time);
 	
 	item.makeLi();
 
 	displayContainer.scrollTo(0, displayContainer.scrollHeight)
 })
+
+socket.on('nicknameAssigned', (nickname) => {
+    senderElem.innerText = nickname;
+	sessionStorage.setItem('nickname', nickname);
+});
+
+socket.on('userUpdate', (users) => {
+    userListElem.innerHTML = users.map(user => `<li>${user}</li>`).join('');
+});
+
+socket.on('loadMessages', (messages) => {
+    messages.forEach((message) => {
+        const item = new LiModel(message.sender, message.msg, message.time);
+        item.makeLi();
+    });
+    displayContainer.scrollTo(0, displayContainer.scrollHeight);
+});

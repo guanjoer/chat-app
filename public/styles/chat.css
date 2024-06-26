@@ -17,7 +17,7 @@ html, body {
 	margin: 0 auto;
 }
 
-.user-container {
+.sender-container {
 	background-color: #a5c5df;
 	flex: 1;
 	display: flex;
@@ -26,12 +26,12 @@ html, body {
 	padding: 0.5rem;
 }
 
-.user-container label {
+.sender-container label {
 	font-size: 0.85rem;
 	margin-right: 1rem;
 }
 
-.user-container input {
+.sender-container input {
 	border: none;
 	border-radius: 3px;
 	height: 70%;
@@ -129,6 +129,14 @@ html, body {
 .sent .message {
 	background-color: #eeea37;
 	border-radius: 6px;
+}
+
+.sent .profile img {
+	display: none;
+}
+
+.sent .user {
+	display: none;
 }
 
 .received .message {
