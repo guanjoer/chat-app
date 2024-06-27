@@ -41,7 +41,7 @@ io.on('connection', (socket) => {
 
 	socket.emit('loadMessages', messages);
 
-	io.emit('userUpdate', users);
+    io.emit('userUpdate', { users, userCount: users.length });
     socket.emit('nicknameAssigned', nickname);
 
 	socket.on('chatting', (data) => { // From Client Data
@@ -52,13 +52,25 @@ io.on('connection', (socket) => {
 		const message = {
             sender: sender,
             msg: msg,
-            time: moment(new Date()).format("h:ss A"),
+            time: moment(new Date()).format("h:mm A"),
 			timestamp: Date.now()
         };
         messages.push(message);
 
 		io.emit('chatting', message); // Send Data To Client
 	})
+
+    // 입장 메시지 생성 및 저장
+    socket.on('userEntered', (nickname) => {
+        const entryMessage = {
+            sender: 'System',
+            msg: `${nickname} 님이 입장하셨습니다`,
+            time: moment(new Date()).format("h:mm A"),
+            timestamp: Date.now()
+        };
+        messages.push(entryMessage);
+        io.emit('chatting', entryMessage); // 모든 클라이언트에게 전송
+    });
 
 	socket.on('disconnect', () => {
         users = users.filter(user => user !== nickname);

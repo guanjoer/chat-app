@@ -26,6 +26,11 @@ html, body {
 	padding: 0.5rem;
 }
 
+.sender-container span {
+	text-align: right;
+	margin-left: auto;
+}
+
 .sender-container label {
 	font-size: 0.85rem;
 	margin-right: 1rem;
@@ -142,4 +147,53 @@ html, body {
 .received .message {
 	background-color: white;
 	border-radius: 6px;
+}
+
+.system {
+    text-align: center;
+    color: gray;
+    font-style: italic;
+}
+
+.system .profile,
+.system .time {
+	display: none;
+}
+
+/* 새로운 스타일 추가 */
+.user-list-container {
+    display: none;
+    position: absolute;
+	/* top: 10%; */
+    /* left: 55%; */
+    background-color: white;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+	width: 10rem;
+    padding: 1rem;
+}
+
+.user-list-container ul {
+	list-style: none;
+}
+
+.user-list-container h4 {
+	margin-bottom: 0.5rem;
+}
+
+.user-list-container li {
+	margin-bottom: 0.5rem;
+}
+
+.user-list-container.visible {
+    display: block;
+}
+
+.toggle-users-btn {
+    background-color: #eeea37;
+    border: none;
+    padding: 0.5rem;
+    cursor: pointer;
+    border-radius: 4px;
 }

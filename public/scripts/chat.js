@@ -12,6 +12,9 @@ const chatInputElem = document.querySelector('.chat-input');
 const sendButton = document.querySelector('.send-btn');
 const displayContainer = document.querySelector('.display-container');
 const userListElem = document.querySelector('.user-list');
+const userListContainer = document.querySelector('.user-list-container');
+const toggleUsersBtn = document.querySelector('.toggle-users-btn');
+const userCountElems = document.querySelectorAll('.user-count')
 
 
 function LiModel(name, msg, time) {
@@ -24,14 +27,16 @@ function LiModel(name, msg, time) {
 
 		if(this.name === senderElem.innerText) {
 			li.classList.add('sent');
-		} else {
-			li.classList.add('received');
-		}
+		} else if (this.name === 'System') {
+            li.classList.add('system');
+        } else {
+            li.classList.add('received');
+        }
 
 		const dom = `
 		<span class="profile">
 		<span class="user">${this.name}</span>
-			<img src="images/cherry-blossoms.jpg" alt="Image...">
+			<img src="images/Default_pfp.svg" alt="Image...">
 		</span>
 		<span class="message">${this.msg}</span>
 		<span class="time">${this.time}</span>
@@ -72,12 +77,21 @@ socket.on('chatting', (data) => {
 })
 
 socket.on('nicknameAssigned', (nickname) => {
+    const isNewSession = !sessionStorage.getItem('nickname');
     senderElem.innerText = nickname;
-	sessionStorage.setItem('nickname', nickname);
+    sessionStorage.setItem('nickname', nickname);
+
+    if (isNewSession) {
+        socket.emit('userEntered', nickname);
+    }
 });
 
-socket.on('userUpdate', (users) => {
+socket.on('userUpdate', (data) => {
+    const { users, userCount } = data;
     userListElem.innerHTML = users.map(user => `<li>${user}</li>`).join('');
+	for(const userCountElem of userCountElems) {
+		userCountElem.innerText = userCount;
+	}
 });
 
 socket.on('loadMessages', (messages) => {
@@ -86,4 +100,9 @@ socket.on('loadMessages', (messages) => {
         item.makeLi();
     });
     displayContainer.scrollTo(0, displayContainer.scrollHeight);
+});
+
+// 토글 버튼 클릭 이벤트
+toggleUsersBtn.addEventListener('click', () => {
+    userListContainer.classList.toggle('visible');
 });
