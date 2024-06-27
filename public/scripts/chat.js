@@ -25,11 +25,11 @@ function LiModel(name, msg, time) {
 	this.makeLi = ()=>{
 		const li = document.createElement('li');
 
-		if(this.name === senderElem.innerText) {
+		if(this.name === senderElem.innerText) { // 수신자 발신자 일치
 			li.classList.add('sent');
-		} else if (this.name === 'System') {
+		} else if (this.name === 'System') { // 입장 메시지
             li.classList.add('system');
-        } else {
+        } else { // 수신자 발신자 불일치
             li.classList.add('received');
         }
 

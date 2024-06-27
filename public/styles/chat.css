@@ -160,12 +160,9 @@ html, body {
 	display: none;
 }
 
-/* 새로운 스타일 추가 */
 .user-list-container {
     display: none;
     position: absolute;
-	/* top: 10%; */
-    /* left: 55%; */
     background-color: white;
     border: 1px solid #ccc;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -176,10 +173,12 @@ html, body {
 
 .user-list-container ul {
 	list-style: none;
+	text-align: center;
 }
 
 .user-list-container h4 {
 	margin-bottom: 0.5rem;
+	text-align: center;
 }
 
 .user-list-container li {

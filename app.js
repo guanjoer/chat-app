@@ -39,21 +39,19 @@ io.on('connection', (socket) => {
 	let nickname = socket.handshake.query.nickname || getRandomNickname();
     users.push(nickname);
 
-	socket.emit('loadMessages', messages);
+	socket.emit('loadMessages', messages); // 24시간 유지되는 기존 대화 로드
 
-    io.emit('userUpdate', { users, userCount: users.length });
+    io.emit('userUpdate', { users, userCount: users.length }); // 접속 유저 수 및 목록
     socket.emit('nicknameAssigned', nickname);
 
 	socket.on('chatting', (data) => { // From Client Data
-		// console.log(data);
-
 		const {sender, msg} = data
 
 		const message = {
             sender: sender,
             msg: msg,
             time: moment(new Date()).format("h:mm A"),
-			timestamp: Date.now()
+			timestamp: Date.now() // 메시지 삭제 용
         };
         messages.push(message);
 
