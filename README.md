@@ -1,7 +1,7 @@
-# Real Time Chat App
+# Real Time CHAT APP
 
 
-주로 `websocket` 기능을 이용하여, 실시간 채팅을 구현하였습니다.
+`Web Socket`의 기능을 이용하여, 실시간 채팅을 구현하였습니다.
 
 **주요 기능:**
 
